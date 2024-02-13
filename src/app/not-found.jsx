@@ -11,7 +11,7 @@ const Page = () => {
                 <Binoculars size={32} className='text-yellow-400 text-lg md:text-3xl' />
                 <h1 className="text-yellow-400 text-lg md:text-3xl font-bold ">Not Found</h1>
             </div>
-            <Link href="/" className='text-2xl font-bold underline text-blue-400 cursor-pointer underline'>Kembali</Link>
+            <Link href="/" className='text-2xl font-bold  text-blue-400 cursor-pointer underline'>Kembali</Link>
         </div>
 
   )

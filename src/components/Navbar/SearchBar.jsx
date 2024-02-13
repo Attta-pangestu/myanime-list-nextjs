@@ -11,15 +11,22 @@ const SearchBar = () => {
 
 
     const handleSearchClick = (e) => {
+        const keyword = searchRef.current.value
+        if(!keyword) return 
         e.preventDefault()
         router.push(`/search/${searchRef.current.value}`)
     }
 
     const handleSearchKeyEnter = (e) => {
         if(e.key === 'Enter') {
+            
+            const keyword = searchRef.current.value
+            if(!keyword) return 
+            
             e.preventDefault()
             router.push(`/search/${searchRef.current.value}`)
         }
+        
     }
 
 

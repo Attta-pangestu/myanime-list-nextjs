@@ -9,6 +9,12 @@
   margin: 0;
 }
 
+
+.bg-anime-details{
+  background-size: cover;
+
+}
+
 /* HTML: <div class="loader"></div> */
 .loader {
   width: 50px;
