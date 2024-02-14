@@ -8,6 +8,7 @@ const YoutubePlayer = ({urlTrailer}) => {
     }
   return (
     <div className='fixed right-0 bottom-0 z-50'>
+        
         <YouTube 
             videoId={urlTrailer}
             opts={options}

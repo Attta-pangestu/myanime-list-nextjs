@@ -12,7 +12,7 @@ const SearchBar = () => {
 
     const handleSearchClick = (e) => {
         const keyword = searchRef.current.value
-        if(!keyword) return 
+        if(!keyword || keyword.trim() === '') return 
         e.preventDefault()
         router.push(`/search/${searchRef.current.value}`)
     }
@@ -21,7 +21,7 @@ const SearchBar = () => {
         if(e.key === 'Enter') {
             
             const keyword = searchRef.current.value
-            if(!keyword) return 
+            if(!keyword || keyword.trim() === '') return 
             
             e.preventDefault()
             router.push(`/search/${searchRef.current.value}`)
@@ -31,7 +31,7 @@ const SearchBar = () => {
 
 
   return (
-    <div className=' flex border-02 bg-neutral-100  border-neutral-200 rounded-lg py-2 px-4 w-full md:w-1/2'>
+    <div className=' flex border-02 bg-neutral-100  border-neutral-200 rounded-lg py-2 px-4 w-full md:w-1/3'>
         <input type='text' ref={searchRef} placeholder='Cari anime disni...' className='bg-transparent w-full  focus:outline-none' onKeyDown={handleSearchKeyEnter}   />
         
         <MagnifyingGlass size={32} color='#000' onClick={handleSearchClick} />  
