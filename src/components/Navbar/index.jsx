@@ -13,7 +13,7 @@ const Navbar = async () => {
         return (
             <div className='w-full flex gap-x-2 justify-center  items-center'>
                 <h5 className='text-lg md:text-2xl text-white font-bold'> 👋 Hai</h5>
-                <Image src={user.image} alt="..." width={50} height={50} className='rounded-full w-full object-cover max-h-[150px] min-h-[50px] w-auto' />
+                <Image src={user.image} alt="..." width={50} height={50} className='rounded-full object-cover max-h-[150px] min-h-[50px] w-auto' />
             </div>
         )
     } 
