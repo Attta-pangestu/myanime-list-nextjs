@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from 'react'
 import AnimeCardList from '@/components/AnimeList'
-import HeaderAnimeList from '@/components/HeaderAnimeList'
-import Pagination from '@/components/Pagination'
+import HeaderAnimeList from '@/components/AnimeList/HeaderAnimeList'
+import Pagination from '@/components/AnimeList/Pagination'
 import { getAnimeResponse } from '@/utils/api'
 
 const Page = () => {

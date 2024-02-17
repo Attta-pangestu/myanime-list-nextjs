@@ -1,36 +1,15 @@
-"use client"
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { getAnimeResponse } from '@/utils/api'
-import HeaderAnimeList from '@/components/HeaderAnimeList'
 import Image from 'next/image'
-import YoutubePlayer from '@/components/VideoPlayer'
-
-const Page = ({params: {id}}) => {
-    const [animeDetails, setAnimeDetails] = useState()
-    const [isOpenTrailer, setIsOpenTrailer] = useState(false)
-    const fetchDetailId = async (id) => {
-        const {data: detailAnimeAPI} = await getAnimeResponse(`anime/${id}`)
-        setAnimeDetails(detailAnimeAPI)
-        console.log(detailAnimeAPI)
-    }
-
-    useEffect(() =>{
-        fetchDetailId(id)
-    }, [id])
-
-    const toggleIsOpenTrailer = () => {
-        setIsOpenTrailer(!isOpenTrailer)
-    }
-
-    if(!animeDetails) {
-        return (
-            <div className="w-full min-h-screen flex justify-center items-center">
-                <div className="loader text-red-400"></div>
-                <h2 className='text-xl md:text-3xl text-red-400 font-bold'>Loading Detail Anime </h2>
-            </div>
-        );
-    }
+import YoutubePlayer from '@/components/AnimeDetails/VideoPlayer'
+import CollectionButton from '@/components/AnimeDetails/CollectionButton'
+import { getUserSession } from '@/utils/authSessionLibs'
+const Page = async  ({params: {id}}) => {
+    
+    const {data: animeDetails} = await getAnimeResponse(`anime/${id}`)
+    const user = await  getUserSession()
+    console.log(user)
 
     const ImagePosterBg = () => {
         return (
@@ -62,7 +41,8 @@ const Page = ({params: {id}}) => {
                     </span>
                     
                 </div>
-                <button onClick={toggleIsOpenTrailer} className=' hover:bg-yellow-400 border border-white text-white font-bold py-2 px-8 rounded-lg'>{isOpenTrailer?'Close Trailer':'Tonton Trailer'}</button>
+                <YoutubePlayer />
+                <CollectionButton user_email={user?.email} anime_mal_id={toString(animeDetails.mal_id)} />
             </div>
         </div>
         )
@@ -92,7 +72,6 @@ const Page = ({params: {id}}) => {
 
     <ImagePosterBg />
     <AnimeContentWrapper />
-    {isOpenTrailer && <YoutubePlayer urlTrailer={animeDetails.trailer.youtube_id} />}
     
     
 </div>

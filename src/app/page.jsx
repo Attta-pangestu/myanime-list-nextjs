@@ -8,7 +8,7 @@
 
 import Link from "next/link";
 import AnimeCardList from "@/components/AnimeList";
-import HeaderAnimeList from "@/components/HeaderAnimeList";
+import HeaderAnimeList from "@/components/AnimeList/HeaderAnimeList";
 import { getAnimeResponse, getRecommendationResponse } from "@/utils/api";
 
 

@@ -1,7 +1,7 @@
 
 import React from 'react'
 import AnimeCardList from '@/components/AnimeList'
-import HeaderAnimeList from '@/components/HeaderAnimeList'
+import HeaderAnimeList from '@/components/AnimeList/HeaderAnimeList'
 
 const Page = async ({params}) => {
   const {keyword} = params
