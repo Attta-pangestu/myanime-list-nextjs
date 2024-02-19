@@ -8,6 +8,7 @@ import { getUserSession } from '@/utils/authSessionLibs'
 import Prisma from '@/utils/prisma-client'
 import CommentWrapper from '@/components/AnimeDetails/CommentWrapper'
 import UsersComments from '@/components/AnimeDetails/UserComments'
+import Rating from '@mui/material/Rating'
 
 const Page = async  ({params: {id}}) => {
     
@@ -84,7 +85,13 @@ const Page = async  ({params: {id}}) => {
                 <div className='flex flex-col gap-6'>
 
                     {animeComments.map((comment, index) => (
-                       <UsersComments key={index} comment={comment} />  
+                       <div key={index}  className='w-full bg-neutral-300 px-6 py-8 shadow-md shadow-neutral-400 rounded-lg border border-dashed border-neutral-500 '>
+                       <div className='flex justify-between'>
+                           <h4 className='text-xl  md:text-2xl font-bold text-neutral-900 '>{comment?.user_email}</h4>
+                           <Rating name="read-only" value={comment?.anime_rating} readOnly />
+                       </div>
+                       <p className='text-neutral-900 text-lg md:text-xl my-4 '>{comment?.comment}</p>
+                   </div>
                     ))}
                 </div>
             </>
