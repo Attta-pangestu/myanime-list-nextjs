@@ -5,11 +5,28 @@ import Image from 'next/image'
 import YoutubePlayer from '@/components/AnimeDetails/VideoPlayer'
 import CollectionButton from '@/components/AnimeDetails/CollectionButton'
 import { getUserSession } from '@/utils/authSessionLibs'
+import Prisma from '@/utils/prisma-client'
+import CommentWrapper from '@/components/AnimeDetails/CommentWrapper'
+import UsersComments from '@/components/AnimeDetails/UserComments'
+
 const Page = async  ({params: {id}}) => {
     
     const {data: animeDetails} = await getAnimeResponse(`anime/${id}`)
     const user = await  getUserSession()
-    console.log(user)
+    const isAddedToCollection = await Prisma.collection.findFirst({
+        where: {
+            user_email: user?.email,
+            anime_mal_id: animeDetails.mal_id.toString()
+        }
+    })
+    const animeComments = await Prisma.comment.findMany({
+        where: {
+            anime_mal_id: animeDetails.mal_id.toString()
+        }
+    })
+
+
+
 
     const ImagePosterBg = () => {
         return (
@@ -42,7 +59,10 @@ const Page = async  ({params: {id}}) => {
                     
                 </div>
                 <YoutubePlayer />
-                <CollectionButton user_email={user?.email} anime_mal_id={toString(animeDetails.mal_id)} />
+                {user && 
+                    <CollectionButton isCreatedCollection={isAddedToCollection} user_email={user?.email} anime_mal_id={animeDetails.mal_id.toString()} anime_title={animeDetails.title} anime_image_url={animeDetails.images.jpg.image_url} />
+
+                }
             </div>
         </div>
         )
@@ -57,23 +77,39 @@ const Page = async  ({params: {id}}) => {
         )
     }
 
+    const AllCommentWrapper = () => {
+        return (
+            <>
+                <hr className='my-4 border border-dashed border-white' />
+                <div className='flex flex-col gap-6'>
+
+                    {animeComments.map((comment, index) => (
+                       <UsersComments key={index} comment={comment} />  
+                    ))}
+                </div>
+            </>
+        )
+    }
+
     const AnimeContentWrapper = () => {
         return (
-            <div className='z-50 w-full absolute top-[60%] bg-neutral-900 bg-opacity-80  p-4 rounded-lg '  >
+            <div className='z-50 w-full absolute top-[60%] bg-neutral-900 bg-opacity-80  p-4  rounded-lg '  >
                 <AnimeHeaderContent />
-                <AnimeDescription />
-                
+                <div className='px-10'>
+                    <AnimeDescription />
+                </div>
+                <CommentWrapper user={user} anime_title={animeDetails.title} anime_mal_id={animeDetails.mal_id.toString() }  />
+                <AllCommentWrapper />
             </div>
         )
     }
 
   return (
-    <div className="w-full relative min-h-screen bg-black text-white  md:p-4">
+    <div className="w-full relative min-h-screen bg-black text-white ">
 
     <ImagePosterBg />
     <AnimeContentWrapper />
-    
-    
+
 </div>
 
   )
